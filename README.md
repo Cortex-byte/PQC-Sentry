@@ -16,3 +16,7 @@ Developed specifically to bridge the legacy-to-quantum transition gap between 20
 ---
 
 ## 🏗️ Architectural Flow
+[Target Source Code] ──► [Component A: SAST Scan Engine] ──► [Structured Vulnerability Report (JSON)]
+│
+▼
+[Quantum-Safe Application] ◄── [Component B: Liboqs Interface] ◄── [Component C: Auto-Patcher]
