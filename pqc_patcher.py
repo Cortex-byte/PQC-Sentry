@@ -11,7 +11,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # ==========================================
 # APEX TIER QUANTUM WEAKNESS REGISTER (STRICT UNIQUE TOKENS)
 # ==========================================
-# ফলস পজিটিভ এড়াতে রেগুলার এক্সপ্রেশনগুলো শুধুমাত্র ক্রিপ্টো ফাংশন বা লাইব্রেরি কলকে টার্গেট করবে
 C_VULNERABLE_REGEX = {
     "RSA_Key_Generation": r"\b(RSA_generate_key|RSA_generate_key_ex|Rsa::generate|RsaPrivateKey::new)\b",
     "DES_TripleDES": r"\b(DES_ecb_encrypt|DES_ede3_cbc_encrypt|DES_ncbc_encrypt|crypto::cipher::des|des3_cbc)\b",
@@ -31,9 +30,6 @@ class PQCASTScanner(ast.NodeVisitor):
                 self.vulnerable_lines.append(node.lineno)
         self.generic_visit(node)
 
-# ==========================================
-# LIVE AI EXPLOIT REASONER WITH TIMEOUT MANAGEMENT
-# ==========================================
 def ask_ai_reasoning(vulnerability_type, code_snippet):
     prompt = f"Analyze this enterprise code snippet showing '{vulnerability_type}'. Explain why this algorithm is vulnerable to a quantum computer using Shor's Algorithm. Code: '{code_snippet}'. Keep it strictly under 2 sentences."
     try:
@@ -45,9 +41,6 @@ def ask_ai_reasoning(vulnerability_type, code_snippet):
     except Exception:
         return f"Local Engine: Critical entropy breakdown risk detected. {vulnerability_type} is susceptible to a 'Harvest Now, Decrypt Later' vector."
 
-# ==========================================
-# IMMUTABLE SURGICAL AUTO-PATCHER ENGINE
-# ==========================================
 def execute_surgical_patch(file_path, vulnerable_lines, is_c=False):
     try:
         backup_path = f"{file_path}.bak"
@@ -68,9 +61,6 @@ def execute_surgical_patch(file_path, vulnerable_lines, is_c=False):
     except Exception:
         return False
 
-# ==========================================
-# ELITE CODE SCANNER FOR MULTIPLE LANGUAGES (ANTI-FALSE-POSITIVE)
-# ==========================================
 def scan_static_file(file_path):
     found_vulnerabilities = []
     try:
@@ -78,7 +68,6 @@ def scan_static_file(file_path):
             for line_num, line in enumerate(f, 1):
                 clean_line = line.strip()
                 
-                # এলিট Filter 1: কমেন্ট লাইন সম্পূর্ণ ইগনোর করা (লাইনের মাঝে কমেন্ট থাকলেও বাদ)
                 if clean_line.startswith(("//", "/*", "*", "#", "-->")):
                     continue
                 if "//" in clean_line:
@@ -86,7 +75,6 @@ def scan_static_file(file_path):
                 if "/*" in clean_line:
                     clean_line = clean_line.split("/*")[0].strip()
                     
-                # Elite Filter 2: ভ্যারিয়েবল নেম হিসেবে 'des' বা 'sha1' থাকলে (যেমন: deserializer, sha1_hash) বাদ দেওয়া
                 for vuln_type, regex in C_VULNERABLE_REGEX.items():
                     if re.search(regex, clean_line):
                         found_vulnerabilities.append({"line": line_num, "type": vuln_type, "code": line.strip()})
@@ -94,9 +82,6 @@ def scan_static_file(file_path):
         pass
     return found_vulnerabilities
 
-# ==========================================
-# PARALLEL PROCESSOR CORE
-# ==========================================
 def process_target_file(file_path, auto_patch=False):
     result = {"file": file_path, "type": None, "findings": [], "patched": False}
     
@@ -119,7 +104,7 @@ def process_target_file(file_path, auto_patch=False):
         except SyntaxError:
             pass
             
-    elif file_path.endswith(('.c', '.cpp', '.h', '.rs', '.go')):
+    else:
         vulns = scan_static_file(file_path)
         if vulns:
             result["type"] = f"Static Token Scan ({os.path.splitext(file_path)[1].upper()})"
@@ -149,9 +134,13 @@ if __name__ == "__main__":
         all_files.append(args.target)
     elif os.path.isdir(args.target):
         print(f"[*] Intelligence Gathering: Mapping target infrastructure in {args.target}")
+        ignored_extensions = ('.png', '.jpg', '.jpeg', '.gif', '.ico', '.zip', '.tar', '.gz', '.mp4')
+        ignored_dirs = ('.git', 'node_modules', 'vendor')
+        
         for root, dirs, files in os.walk(args.target):
+            dirs[:] = [d for d in dirs if d not in ignored_dirs]
             for file in files:
-                if file.endswith(('.py', '.c', '.cpp', '.h', '.rs', '.go')):
+                if not file.lower().endswith(ignored_extensions):
                     all_files.append(os.path.join(root, file))
     else:
         print("[-] Fatal: Invalid path.")
